@@ -1,0 +1,64 @@
+﻿@model Covid_19_WebSite.Models.Enumeration
+
+@{
+    ViewBag.Title = "Modification des résultats";
+}
+
+<h2 class="mt-4">Modification du résultats séléctionner</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal w-62">
+        <h4>Les résultats :</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+        @Html.HiddenFor(model => model.UID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cas_Mort, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Cas_Mort, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Cas_Mort, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cas_Retablis, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Cas_Retablis, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Cas_Retablis, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date_Ins, htmlAttributes: new { @class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Date_Ins, htmlAttributes: new {  @class = "form-control", @Value=@Model.Date_Ins.GetValueOrDefault().ToShortDateString()?? DateTime.Now.ToShortDateString() })
+                @Html.ValidationMessageFor(model => model.Date_Ins, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cas_Confirmer, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Cas_Confirmer, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UID_V, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Modifier" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Retour au liste", "Index", null, htmlAttributes: new { @class = "btn btn-outline-warning" })
+</div>
+
+<br />
+

@@ -1,0 +1,43 @@
+﻿@model Covid_19_WebSite.Models.Region
+
+@{
+    ViewBag.Title = "Supprimer";
+}
+
+<h2 class="my-5">Supprimer un région </h2>
+
+
+<div class="alert alert-dismissible alert-danger">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4 class="alert-heading">Attention !!</h4>
+    <p class="mb-0">Est ce que vous éte sure de supprimer la région ?</p>
+</div>
+
+<div>
+    <div class="mt-4">
+
+        <div>
+
+            <div class="card border-success text-white bg-success mb-3" style="max-width: 20rem;">
+                <div class="card-header">Nom de la région </div>
+                <div class="card-body">
+                    <h4 class="card-title">@Html.DisplayFor(model => model.Nom) </h4>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        @Html.ActionLink("Supprimer", "Delete", new { id = Model.UID }, htmlAttributes: new { @class = "btn btn-danger btn-outline mr-4 bt_w30" })
+        <br />
+        <br />
+        @Html.ActionLink("List", "Index", null, htmlAttributes: new { @class = "btn btn-outline-warning bt_w30" })
+    </div>
+    }
+</div>

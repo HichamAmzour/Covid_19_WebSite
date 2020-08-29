@@ -1,0 +1,505 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="COVID_19_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Enumeration">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Cas_Mort" Type="int" />
+          <Property Name="Cas_Retablis" Type="int" />
+          <Property Name="Cas_Confirmer" Type="int" />
+          <Property Name="Date_Ins" Type="date" />
+          <Property Name="UID_V" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="50" />
+          <Property Name="Nombre_Tests_R" Type="int" />
+        </EntityType>
+        <EntityType Name="RegionStatistiques">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Cas_Mort" Type="int" />
+          <Property Name="Cas_Retablis" Type="int" />
+          <Property Name="Cas_Confirmer" Type="int" />
+          <Property Name="Date_Ins" Type="date" />
+          <Property Name="UID_R" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Nom_Role" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Role_Util">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UID_Role" Type="nvarchar" MaxLength="100" />
+          <Property Name="UID_Utilisateur" Type="nvarchar" MaxLength="100" />
+          <Property Name="Date" Type="date" />
+        </EntityType>
+        <EntityType Name="Tests">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Date_Test" Type="date" />
+          <Property Name="Nombre_test" Type="int" />
+          <Property Name="UID_R" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Utilisateur">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="pseudo" Type="nvarchar" MaxLength="100" />
+          <Property Name="Mot_Pass" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Ville">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="100" />
+          <Property Name="UID_Region" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__Enumerati__UID_V__6383C8BA">
+          <End Role="Ville" Type="Self.Ville" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Enumeration" Type="Self.Enumeration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ville">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Enumeration">
+              <PropertyRef Name="UID_V" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Role_Util__UID_R__49C3F6B7">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Role_Util" Type="Self.Role_Util" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Role_Util">
+              <PropertyRef Name="UID_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Role_Util__UID_U__4AB81AF0">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Role_Util" Type="Self.Role_Util" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Role_Util">
+              <PropertyRef Name="UID_Utilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ville__UID_Regio__3D5E1FD2">
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ville" Type="Self.Ville" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Ville">
+              <PropertyRef Name="UID_Region" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Region_Test">
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+          <End Role="Tests" Type="Self.Tests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Tests">
+              <PropertyRef Name="UID_R" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RG_RGSt">
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+          <End Role="RegionStatistiques" Type="Self.RegionStatistiques" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="RegionStatistiques">
+              <PropertyRef Name="UID_R" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="COVID_19_DBModelStoreContainer">
+          <EntitySet Name="Enumeration" EntityType="Self.Enumeration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegionStatistiques" EntityType="Self.RegionStatistiques" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role_Util" EntityType="Self.Role_Util" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tests" EntityType="Self.Tests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ville" EntityType="Self.Ville" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Enumerati__UID_V__6383C8BA" Association="Self.FK__Enumerati__UID_V__6383C8BA">
+            <End Role="Ville" EntitySet="Ville" />
+            <End Role="Enumeration" EntitySet="Enumeration" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Role_Util__UID_R__49C3F6B7" Association="Self.FK__Role_Util__UID_R__49C3F6B7">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Role_Util" EntitySet="Role_Util" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Role_Util__UID_U__4AB81AF0" Association="Self.FK__Role_Util__UID_U__4AB81AF0">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Role_Util" EntitySet="Role_Util" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ville__UID_Regio__3D5E1FD2" Association="Self.FK__Ville__UID_Regio__3D5E1FD2">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Ville" EntitySet="Ville" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Region_Test" Association="Self.FK_Region_Test">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Tests" EntitySet="Tests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RG_RGSt" Association="Self.FK_RG_RGSt">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="RegionStatistiques" EntitySet="RegionStatistiques" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="COVID_19_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Enumeration">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cas_Mort" Type="Int32" />
+          <Property Name="Cas_Retablis" Type="Int32" />
+          <Property Name="Cas_Confirmer" Type="Int32" />
+          <Property Name="Date_Ins" Type="DateTime" Precision="0" />
+          <Property Name="UID_V" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ville" Relationship="Self.FK__Enumerati__UID_V__6383C8BA" FromRole="Enumeration" ToRole="Ville" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre_Tests_R" Type="Int32" />
+          <NavigationProperty Name="Villes" Relationship="Self.FK__Ville__UID_Regio__3D5E1FD2" FromRole="Region" ToRole="Ville" />
+          <NavigationProperty Name="Tests" Relationship="Self.FK_Region_Test" FromRole="Region" ToRole="Tests" />
+          <NavigationProperty Name="RegionStatistiques" Relationship="Self.FK_RG_RGSt" FromRole="Region" ToRole="RegionStatistiques" />
+        </EntityType>
+        <EntityType Name="RegionStatistique">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cas_Mort" Type="Int32" />
+          <Property Name="Cas_Retablis" Type="Int32" />
+          <Property Name="Cas_Confirmer" Type="Int32" />
+          <Property Name="Date_Ins" Type="DateTime" Precision="0" />
+          <Property Name="UID_R" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Region" Relationship="Self.FK_RG_RGSt" FromRole="RegionStatistiques" ToRole="Region" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nom_Role" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Role_Util" Relationship="Self.FK__Role_Util__UID_R__49C3F6B7" FromRole="Role" ToRole="Role_Util" />
+        </EntityType>
+        <EntityType Name="Role_Util">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UID_Role" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UID_Utilisateur" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Role" Relationship="Self.FK__Role_Util__UID_R__49C3F6B7" FromRole="Role_Util" ToRole="Role" />
+          <NavigationProperty Name="Utilisateur" Relationship="Self.FK__Role_Util__UID_U__4AB81AF0" FromRole="Role_Util" ToRole="Utilisateur" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date_Test" Type="DateTime" Precision="0" />
+          <Property Name="Nombre_test" Type="Int32" />
+          <Property Name="UID_R" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Region" Relationship="Self.FK_Region_Test" FromRole="Tests" ToRole="Region" />
+        </EntityType>
+        <EntityType Name="Utilisateur">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Mot_Pass" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Role_Util" Relationship="Self.FK__Role_Util__UID_U__4AB81AF0" FromRole="Utilisateur" ToRole="Role_Util" />
+          <Property Name="pseudo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Ville">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UID_Region" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Enumerations" Relationship="Self.FK__Enumerati__UID_V__6383C8BA" FromRole="Ville" ToRole="Enumeration" />
+          <NavigationProperty Name="Region" Relationship="Self.FK__Ville__UID_Regio__3D5E1FD2" FromRole="Ville" ToRole="Region" />
+        </EntityType>
+        <Association Name="FK__Enumerati__UID_V__6383C8BA">
+          <End Role="Ville" Type="Self.Ville" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Enumeration" Type="Self.Enumeration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ville">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Enumeration">
+              <PropertyRef Name="UID_V" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ville__UID_Regio__3D5E1FD2">
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ville" Type="Self.Ville" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Ville">
+              <PropertyRef Name="UID_Region" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Region_Test">
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+          <End Role="Tests" Type="Self.Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Tests">
+              <PropertyRef Name="UID_R" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RG_RGSt">
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+          <End Role="RegionStatistiques" Type="Self.RegionStatistique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="RegionStatistiques">
+              <PropertyRef Name="UID_R" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Role_Util__UID_R__49C3F6B7">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Role_Util" Type="Self.Role_Util" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Role_Util">
+              <PropertyRef Name="UID_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Role_Util__UID_U__4AB81AF0">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Role_Util" Type="Self.Role_Util" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Role_Util">
+              <PropertyRef Name="UID_Utilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="COVID_19_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Enumerations" EntityType="Self.Enumeration" />
+          <EntitySet Name="Regions" EntityType="Self.Region" />
+          <EntitySet Name="RegionStatistiques" EntityType="Self.RegionStatistique" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Role_Util" EntityType="Self.Role_Util" />
+          <EntitySet Name="Tests" EntityType="Self.Test" />
+          <EntitySet Name="Utilisateurs" EntityType="Self.Utilisateur" />
+          <EntitySet Name="Villes" EntityType="Self.Ville" />
+          <AssociationSet Name="FK__Enumerati__UID_V__6383C8BA" Association="Self.FK__Enumerati__UID_V__6383C8BA">
+            <End Role="Ville" EntitySet="Villes" />
+            <End Role="Enumeration" EntitySet="Enumerations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ville__UID_Regio__3D5E1FD2" Association="Self.FK__Ville__UID_Regio__3D5E1FD2">
+            <End Role="Region" EntitySet="Regions" />
+            <End Role="Ville" EntitySet="Villes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Region_Test" Association="Self.FK_Region_Test">
+            <End Role="Region" EntitySet="Regions" />
+            <End Role="Tests" EntitySet="Tests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RG_RGSt" Association="Self.FK_RG_RGSt">
+            <End Role="Region" EntitySet="Regions" />
+            <End Role="RegionStatistiques" EntitySet="RegionStatistiques" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Role_Util__UID_R__49C3F6B7" Association="Self.FK__Role_Util__UID_R__49C3F6B7">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Role_Util" EntitySet="Role_Util" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Role_Util__UID_U__4AB81AF0" Association="Self.FK__Role_Util__UID_U__4AB81AF0">
+            <End Role="Utilisateur" EntitySet="Utilisateurs" />
+            <End Role="Role_Util" EntitySet="Role_Util" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="COVID_19_DBModelStoreContainer" CdmEntityContainer="COVID_19_DBEntities">
+          <EntitySetMapping Name="Enumerations">
+            <EntityTypeMapping TypeName="COVID_19_DBModel.Enumeration">
+              <MappingFragment StoreEntitySet="Enumeration">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Cas_Mort" ColumnName="Cas_Mort" />
+                <ScalarProperty Name="Cas_Retablis" ColumnName="Cas_Retablis" />
+                <ScalarProperty Name="Cas_Confirmer" ColumnName="Cas_Confirmer" />
+                <ScalarProperty Name="Date_Ins" ColumnName="Date_Ins" />
+                <ScalarProperty Name="UID_V" ColumnName="UID_V" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Regions">
+            <EntityTypeMapping TypeName="COVID_19_DBModel.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Nombre_Tests_R" ColumnName="Nombre_Tests_R" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegionStatistiques">
+            <EntityTypeMapping TypeName="COVID_19_DBModel.RegionStatistique">
+              <MappingFragment StoreEntitySet="RegionStatistiques">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Cas_Mort" ColumnName="Cas_Mort" />
+                <ScalarProperty Name="Cas_Retablis" ColumnName="Cas_Retablis" />
+                <ScalarProperty Name="Cas_Confirmer" ColumnName="Cas_Confirmer" />
+                <ScalarProperty Name="Date_Ins" ColumnName="Date_Ins" />
+                <ScalarProperty Name="UID_R" ColumnName="UID_R" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="COVID_19_DBModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Nom_Role" ColumnName="Nom_Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role_Util">
+            <EntityTypeMapping TypeName="COVID_19_DBModel.Role_Util">
+              <MappingFragment StoreEntitySet="Role_Util">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="UID_Role" ColumnName="UID_Role" />
+                <ScalarProperty Name="UID_Utilisateur" ColumnName="UID_Utilisateur" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tests">
+            <EntityTypeMapping TypeName="COVID_19_DBModel.Test">
+              <MappingFragment StoreEntitySet="Tests">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Date_Test" ColumnName="Date_Test" />
+                <ScalarProperty Name="Nombre_test" ColumnName="Nombre_test" />
+                <ScalarProperty Name="UID_R" ColumnName="UID_R" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilisateurs">
+            <EntityTypeMapping TypeName="COVID_19_DBModel.Utilisateur">
+              <MappingFragment StoreEntitySet="Utilisateur">
+                <ScalarProperty Name="pseudo" ColumnName="pseudo" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Mot_Pass" ColumnName="Mot_Pass" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Villes">
+            <EntityTypeMapping TypeName="COVID_19_DBModel.Ville">
+              <MappingFragment StoreEntitySet="Ville">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="UID_Region" ColumnName="UID_Region" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

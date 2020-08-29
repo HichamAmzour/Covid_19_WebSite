@@ -1,0 +1,52 @@
+﻿@model Covid_19_WebSite.Models.Ville
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2 class="my-5">Supprimer une ville </h2>
+
+
+<div class="alert alert-dismissible alert-danger">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4 class="alert-heading">Attention !!</h4>
+    <p class="mb-0">Est ce que vous éte sure de supprimer cette ville ?</p>
+</div>
+
+
+<div>
+    <div class="mt-4">
+
+        <div style="display:flex;justify-content:space-evenly;align-items:center">
+
+            <div class="card border-success text-white bg-success mb-3" style="max-width: 20rem;flex:1">
+                <div class="card-header">Nom du Ville </div>
+                <div class="card-body">
+                    <h4 class="card-title"> @Html.DisplayFor(model => model.Nom) </h4>
+                </div>
+            </div>
+
+            <div class="card border-success card text-white bg-warning mb-3" style="max-width: 20rem;flex:1">
+                <div class="card-header">La région auqelle la ville appartien </div>
+                <div class="card-body">
+                    <h4 class="card-title">  @Html.DisplayFor(model => model.Region.Nom) </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        @Html.ActionLink("Supprimer", "Delete", new { id = Model.UID }, htmlAttributes: new { @class = "btn btn-danger btn-outline mr-4 bt_w30 " })
+        <br />
+        <br />
+        @Html.ActionLink("Retourne au List", "Index", null, htmlAttributes: new { @class = "btn btn-outline-warning bt_w30" })
+    </div>
+    }
+</div>
+<br />
+<br />
+
+

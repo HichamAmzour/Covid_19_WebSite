@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @*<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>*@
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+
+</head>
+<body>
+
+    <div class="bg"></div>
+    <nav class="navbar navbar-expand-lg container-fluid">
+        @Html.Partial("loginPartial")
+    </nav>
+
+        <div class="container body-content">
+            @RenderBody()
+
+        </div>
+      
+        <br />
+        <footer class="footer">
+            <p>&copy; @DateTime.Now.Year - COVID-19 Application, AMZOUR HICHAM, ISTA Mirleft</p>
+        </footer>
+
+        @RenderSection("scripts", required: false)
+
+</body>
+</html>

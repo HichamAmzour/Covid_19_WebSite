@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Covid_19_WebSite.Models.Ville>
+
+@{
+    ViewBag.Title = "List de toutes les ville du maroc ";
+}
+
+<h2 class="my-4">List de toutes les villes</h2>
+
+
+<div class="list-group mb-4">
+    @using (Html.BeginForm("Index", "Ville", FormMethod.Get, htmlAttributes: new { @class = "form-inline my-2 my-lg-0" }))
+    {
+
+        @Html.Editor("value", new { htmlAttributes = new { @class = "form-control mr-sm-2", placeholder = "recherche" } })
+
+        <button type="submit" class="btn btn-outline-success my-2 my-sm-0 mr-5">Rechercher</button>
+
+        @Html.ActionLink("Ajouter une ville ", "Create", null, htmlAttributes: new { @class = "btn btn-outline-info ml-5" })
+    }
+</div>
+
+
+@if (Model.Count() <= 0)
+{
+
+    <div class="alert alert-dismissible alert-info my-2">
+        <p class="mb-0">Aucune résultat est trouver pour cette recherche essayer autres valeurs.</p>
+    </div>
+   
+    
+}
+else
+{
+    <table class="table table-hover">
+        <thead class="table-success">
+        <th>
+           Ville
+        </th>
+        <th>
+           Région
+        </th>
+        <th></th>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr class="table-secondary">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Region.Nom)
+                </td>
+                <td>
+                    @Html.ActionLink("Modifier", "Edit", new { id = item.UID }) |
+                    @Html.ActionLink("Détails", "Details", new { id = item.UID }) |
+                    @Html.ActionLink("Supprimer", "Delete", new { id = item.UID })
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+}

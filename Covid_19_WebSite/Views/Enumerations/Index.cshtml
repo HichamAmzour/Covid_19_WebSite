@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Covid_19_WebSite.Models.Enumeration>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="my-3">Liste des informations lié au COVID-19  </h2>
+
+
+
+    <div class="list-group my-3">
+        @using (Html.BeginForm("Index", "Enumerations", FormMethod.Get, htmlAttributes: new { @class = "form-inline my-2 my-lg-0" }))
+        {
+        <table class="table table-hover">
+            <thead class="table-secondary">
+            <th> @Html.Editor("ville", new { htmlAttributes = new { @class = "form-control  btn-sm mr-sm-2", placeholder = "ville" } })  </th>
+            <th> @Html.Editor("region", new { htmlAttributes = new { @class = "form-control btn-sm mr-sm-2", placeholder = "region" } })  </th>
+            <th> @Html.Editor("date", new { htmlAttributes = new { @class = "form-control btn-sm mr-sm-2", placeholder = "date",@type="date" } })  </th>
+        
+            <th> <button type="submit" class="btn btn-outline-success my-2 my-sm-0 mr-5">Rechercher</button> </th>
+            <th> @Html.ActionLink("Ajouter", "Create", null, htmlAttributes: new { @class = "btn btn-outline-info ml-5" })</th>
+            </thead>
+        </table>
+
+           
+        }
+    </div>
+
+    @if (Model.Count() <= 0)
+    {
+
+        <div class="alert alert-dismissible alert-info my-2">
+            <p class="mb-0">Aucune résultat trouver pour cette recherche !! veuillez essayez autres .</p>
+        </div>
+    }
+    else
+    {
+
+        <table class="table table-hover">
+            <thead class="table-info">
+            <th>
+               Cas Mort
+            </th>
+            <th>
+                Cas Retablis
+            </th>
+            <th>
+               Cas Confirmer
+            </th>
+            <th>
+                Date
+            </th>
+
+            <th>
+                Ville
+            </th>
+            <th>
+                Région
+            </th>
+            <th></th>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tr class="table-secondary">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cas_Mort)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cas_Retablis)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cas_Confirmer)
+                    </td>
+                    <td>
+                        @Html.Label(item.Date_Ins.GetValueOrDefault(new DateTime(1958, 01, 01)).ToShortDateString())
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ville.Nom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ville.Region.Nom)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Modifier", "Edit", new { id = item.UID }) |
+                        @Html.ActionLink("Détails", "Details", new { id = item.UID }) |
+                        @Html.ActionLink("Supprimer", "Delete", new { id = item.UID })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }

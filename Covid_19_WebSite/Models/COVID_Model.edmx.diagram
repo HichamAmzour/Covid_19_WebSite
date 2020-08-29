@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a86e933f283c4c57b2af9f0e0280a8b6" Name="Diagram1">
+        <EntityTypeShape EntityType="COVID_19_DBModel.Enumeration" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COVID_19_DBModel.Region" Width="1.5" PointX="1" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COVID_19_DBModel.RegionStatistique" Width="1.5" PointX="5" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COVID_19_DBModel.Role" Width="1.5" PointX="10.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COVID_19_DBModel.Role_Util" Width="1.5" PointX="8.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COVID_19_DBModel.Test" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COVID_19_DBModel.Utilisateur" Width="1.5" PointX="6.75" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COVID_19_DBModel.Ville" Width="1.5" PointX="1" PointY="3.375" IsExpanded="true" />
+        <AssociationConnector Association="COVID_19_DBModel.FK__Enumerati__UID_V__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="COVID_19_DBModel.FK__Ville__UID_Regio__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="COVID_19_DBModel.FK_Region_Test" ManuallyRouted="false" />
+        <AssociationConnector Association="COVID_19_DBModel.FK_RG_RGSt" ManuallyRouted="false" />
+        <AssociationConnector Association="COVID_19_DBModel.FK__Role_Util__UID_R__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="COVID_19_DBModel.FK__Role_Util__UID_U__4AB81AF0" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

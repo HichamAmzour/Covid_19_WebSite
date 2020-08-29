@@ -1,0 +1,41 @@
+﻿
+@if(Session["utilisateur"]!=null && Session["Role"]!=null)
+{
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto brd">
+                <li class="nav-item ">
+                    @Html.ActionLink("Acceuille", "Index", "Acceuille", new { area = "" }, htmlAttributes: new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Régions", "Index", "Region", new { area = "" }, htmlAttributes: new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Villes", "Index", "Ville", new { area = "" }, htmlAttributes: new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("COVID-19", "Index", "Enumerations", new { area = "" }, htmlAttributes: new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Utilisateurs", "Index", "Utilisateur", new { area = "" }, htmlAttributes: new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("accessibilité", "Index", "Access", new { area = "" }, htmlAttributes: new { @class = "nav-link" })
+                </li>
+
+            </ul>
+
+            <ul class="navbar-nav form-inline my-2 my-lg-0">
+                <li class="nav-item mr-2">
+                    @Html.Label(" Bonjour " + Session["utilisateur"].ToString(), htmlAttributes: new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Déconnecter", "deconnecter", "Login", new { area = "" }, htmlAttributes: new { @class = "nav-link btn btn-outline-danger" })
+                </li>
+            </ul>
+        </div>
+
+}

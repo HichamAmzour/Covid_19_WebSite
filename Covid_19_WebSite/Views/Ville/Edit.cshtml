@@ -1,0 +1,50 @@
+﻿@model Covid_19_WebSite.Models.Ville
+
+@{
+    ViewBag.Title = "Modifier la ville séléctionner";
+}
+
+<h2 class="my-5">Modifier les valeurs de la ville choisi</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal w-62">
+    <h4 class="text-muted">Inforomations sur Ville</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.UID)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Nom, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Nom, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Nom, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UID_Region, "Région", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("UID_Region", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.UID_Region, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Modifier" class="btn btn-success btn-block" />
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Liste", "Index", null, htmlAttributes: new { @class = "btn btn-outline-warning bt_w30" })
+            </div>
+        </div>
+    </div>
+
+</div>
+}

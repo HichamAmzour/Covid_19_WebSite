@@ -1,0 +1,34 @@
+﻿@model Covid_19_WebSite.Models.Utilisateur
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<style type="text/css">
+   
+    
+
+
+</style>
+<div class="container">
+        <div class="center">
+                    @using (Html.BeginForm("Connecter", "Login", FormMethod.Post, htmlAttributes: new { @class = "form p50 bordered" }))
+                    {
+                    <div>
+                        <h1 class="h1">Form d'authantification </h1>
+                        <label class="@ViewBag.Class">@ViewBag.msg</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="util">Utilisateur</label>
+                        @Html.Editor("util", new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.pseudo)
+                        <br />
+                        <label for="pass">Mot de passe</label>
+                        @Html.Editor("pass", new { htmlAttributes = new { @class = "form-control",@type="password" } })
+                        @Html.ValidationMessageFor(model => model.Mot_Pass)
+                        <br />
+                        <button type="submit" class="btn btn-success w-62">Connecter</button>
+                    </div>
+                    }
+        </div>
+</div>

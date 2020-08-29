@@ -1,0 +1,159 @@
+﻿@model Covid_19_WebSite.Models.RoleUserModel
+
+
+<div class="row">
+    <div class="col-md-6 p20">
+        <div class="card">
+            <label class="alert alert-success" style="@ViewBag.style">@ViewBag.msg</label>
+            <br />
+            <table class="table round">
+                <thead>
+                    <th>
+                        Nome Role
+                    </th>
+                    <th>
+                    </th>
+                </thead>
+                    <tbody>
+                        @foreach (var item in Model.listeRoles)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nom_Role)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Modifier", "Edit", new { id = item.UID }) |
+                                    @Html.ActionLink("Supprimer", "Delete",new { id = item.UID })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+            </table>
+        </div>
+        <div class="card mt-2">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <table class="table table-hover">
+                    <thead class="table-info">
+                        <th>
+                            Utilisateur
+                        </th>
+                        <th>
+                            Role
+                        </th>
+                        <th></th>
+                    <thead />
+                    <tbody>
+                        @foreach(var item in Model.listeRolesUtilis)
+                        {
+                         <tr>
+                             <td>@Html.DisplayFor(modelItem => item.Utilisateur.pseudo)</td>
+                             <td>@Html.DisplayFor(modelItem => item.Role.Nom_Role)</td>
+                             <td>
+                                 @Html.ActionLink("Modifier", "Edit","Role_Util",new { id=item.UID },null) |
+                                 @Html.ActionLink("Supprimer","Delete","Role_Util", new { id = item.UID },null)
+                             </td>
+                         </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+    <div class="col-md-6 p20">
+
+        <div class="card mb-3">
+            @if (ViewBag.modifyRole)
+            {
+                using (Html.BeginForm("Edit","Access",new {id=Model.role.UID},FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row p20">
+                        <div style="display:inline-table; width:100%;padding-left:20px">
+                            <label class="mr-2">Nome Role :</label>
+                            @Html.Editor("Nom_Role", new { htmlAttributes = new { @class = "form-control my-4",@Value=Model.role.Nom_Role} })
+                            <button type="submit" class="btn btn-outline-success ml-2 w-100">Modifier</button>
+                        </div>
+
+                    </div>
+                }
+
+            }
+            else
+            {
+                using (Html.BeginForm("Create", "Access", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row p20">
+                        <div style="display:inline-table; width:100%;padding-left:20px">
+                            <label class="mr-2">Nome Role :</label>
+                            @Html.Editor("Nom_Role", new { htmlAttributes = new { @class = "form-control my-4" } })
+                            <button type="submit" class="btn btn-outline-success ml-2 w-100">Ajouter</button>
+                        </div>
+
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="card ">
+
+            @if (ViewBag.modifyRoleUtil)
+            {
+                using (Html.BeginForm("Edit", "Role_Util", FormMethod.Post, htmlAttributes: new { @class = "p20" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div>
+                        @Html.Hidden("Role_Util", Model.Role_Util, htmlAttributes: new { @Value = Model.Role_Util })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Roles", htmlAttributes: new { @class = "control-label" })
+                        <div class="">
+                            @Html.DropDownList("UID_Role", new SelectList(Model.listeRoles, "UID", "Nom_Role",Model.role.UID),
+                         htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Utilisateur", htmlAttributes: new { @class = "control-label" })
+                        <div class="">
+                            @Html.DropDownList("UID_User", new SelectList(Model.listeUtilisateurs, "UID", "pseudo", Model.utilisateur.UID), htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+                            <button type="submit" class="btn btn-warning w-100">Modifier</button>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                using (Html.BeginForm("assign", "Access", FormMethod.Post, htmlAttributes: new { @class = "p20" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        @Html.Label("Roles", htmlAttributes: new { @class = "control-label" })
+                        <div class="">
+                            @Html.DropDownList("UID_Role", new SelectList(Model.listeRoles, "UID", "Nom_Role"),
+                             htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Utilisateur", htmlAttributes: new { @class = "control-label" })
+                        <div class="">
+                            @Html.DropDownList("UID_User", new SelectList(Model.listeUtilisateurs, "UID", "pseudo"), htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+                            <button type="submit" class="btn btn-warning w-100">Affecter</button>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

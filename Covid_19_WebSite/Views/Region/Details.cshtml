@@ -1,0 +1,30 @@
+﻿@model Covid_19_WebSite.Models.Region
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<h2 class="my-5">Détails de la région séléctionner</h2>
+
+<div class="mt-4">
+
+    <div>
+
+        <div class="card border-success text-white bg-success mb-3" style="max-width: 20rem;">
+            <div class="card-header">Nom de la région </div>
+            <div class="card-body">
+                <h4 class="card-title">@Html.DisplayFor(model => model.Nom) </h4>
+            </div>
+        </div>
+       
+    </div>
+
+</div>
+
+<p>
+    @Html.ActionLink("Modifier", "Edit", new { id = Model.UID }, htmlAttributes: new { @class = "btn btn-outline-success bt_w30" }) 
+    <br />
+    <br />
+    @Html.ActionLink("Liste", "Index", null, htmlAttributes: new { @class = "btn btn-outline-warning bt_w30" })
+</p>
